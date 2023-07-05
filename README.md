@@ -1,4 +1,4 @@
-This script scrapes the NORAD database for a given object and creates a TLE file for it.
+This script scrapes the NORAD satellite database for a given object and creates a TLE file for it.
 
 To run the script you need to have python installed (https://www.python.org/downloads/).
 

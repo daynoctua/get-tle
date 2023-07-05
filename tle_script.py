@@ -14,38 +14,27 @@ all_lines = web_request.read().decode()
 line_array = all_lines.splitlines()
 output_lines = []
 output_content = []
+target_found = False
 
-# Loop through each line of 
+# Loop through each line of the databse file
 print("Looking for ["+target_object+"]...")
 for i in range(0, len(line_array)):
     line = line_array[i]
 
     # Check if the current line in the loop matches our target
     if line.strip() == target_object:
-        # If it does - set the next two lines as the contents of resulting TLEs
-        output_content = [
-            line_array[i+1],
-            line_array[i+2]
-        ]
+        # If it does - output the next two lines to a new file
+        target_found = True
+        with open("./"+target_object+"_TLE.txt", 'w') as output_file:
+            output_file.write(
+                line_array[i+1]+"\n"
+                +line_array[i+2]
+            )
+
+
         print("["+target_object+"] found")
+        print("File "+target_object+"_TLE.txt created")
         break
 
-
-
-if len(output_content) == 0:
-    # create an error if we don't find what we look for
-    raise "No object ["+target_object+"] found in database"
-else:
-    # Output the TLE file to the script's directory
-    with open("./"+target_object+"_TLE.txt", 'w') as output_file:
-        for line in output_content:
-            output_file.write(line)
-            # only add newline after the first line
-            if line == output_content[0]:
-                output_file.write("\n")
-
-    print("File "+target_object+"_TLE.txt created")
-
-
-        
-
+if not target_found:
+    raise Exception("No object ["+target_object+"] found in database")
